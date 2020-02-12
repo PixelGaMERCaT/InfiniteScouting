@@ -19,8 +19,16 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean general, auto, teleop, misc, miscDefense, miscClimb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        general = true;
+        auto = true;
+        teleop = true;
+        misc = true;
+        miscDefense = true;
+        miscClimb = true;
         super.onCreate(savedInstanceState);
 
         RelativeLayout relativeLayout = new RelativeLayout(this);
@@ -217,6 +225,78 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    public void generalView(View view) {
+        if (general = !general) {
+            findViewById(R.id.name).setVisibility(View.VISIBLE);
+            findViewById(R.id.matchNumber).setVisibility(View.VISIBLE);
+            findViewById(R.id.teamNumber).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.name).setVisibility(View.GONE);
+            findViewById(R.id.matchNumber).setVisibility(View.GONE);
+            findViewById(R.id.teamNumber).setVisibility(View.GONE);
+        }
+    }
+    public void autoView(View view) {
+        if (auto = !auto) {
+            findViewById(R.id.autoInnerHigh).setVisibility(View.VISIBLE);
+            findViewById(R.id.autoHigh).setVisibility(View.VISIBLE);
+            findViewById(R.id.autoLow).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.autoInnerHigh).setVisibility(View.GONE);
+            findViewById(R.id.autoHigh).setVisibility(View.GONE);
+            findViewById(R.id.autoLow).setVisibility(View.GONE);
+        }
+    }
+    public void teleopView(View view) {
+        if (teleop = !teleop) {
+            findViewById(R.id.teleopInnerHigh).setVisibility(View.VISIBLE);
+            findViewById(R.id.teleopHigh).setVisibility(View.VISIBLE);
+            findViewById(R.id.teleopLow).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.teleopInnerHigh).setVisibility(View.GONE);
+            findViewById(R.id.teleopHigh).setVisibility(View.GONE);
+            findViewById(R.id.teleopLow).setVisibility(View.GONE);
+        }
+    }
+    public void miscView(View view) {
+        miscDefense = misc;
+        miscClimb = misc;
+        miscDefenseView(null);
+        miscClimbView(null);
+        if (misc = !misc) {
+            findViewById(R.id.miscDefenseTab).setVisibility(View.VISIBLE);
+            findViewById(R.id.miscClimbTab).setVisibility(View.VISIBLE);
+            findViewById(R.id.comments).setVisibility(View.VISIBLE);
+            findViewById(R.id.commentBox).setVisibility(View.VISIBLE);
+
+
+        } else {
+            findViewById(R.id.miscDefenseTab).setVisibility(View.GONE);
+            findViewById(R.id.miscClimbTab).setVisibility(View.GONE);
+            findViewById(R.id.comments).setVisibility(View.GONE);
+            findViewById(R.id.commentBox).setVisibility(View.GONE);
+        }
+    }
+    public void miscDefenseView(View view) {
+        if (miscDefense = !miscDefense) {
+            findViewById(R.id.defensePlayed).setVisibility(View.VISIBLE);
+            defenseView(null);
+            findViewById(R.id.defensePlayedAgainst).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.defensePlayed).setVisibility(View.GONE);
+            findViewById(R.id.defenseEffectivenessQuestion).setVisibility(View.GONE);
+            findViewById(R.id.defenseEffectiveness).setVisibility(View.GONE);
+            findViewById(R.id.defensePlayedAgainst).setVisibility(View.GONE);
+        }
+    }
+    public void miscClimbView(View view) {
+        if (miscClimb = !miscClimb) {
+            findViewById(R.id.climbRadio).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.climbRadio).setVisibility(View.GONE);
+        }
+    }
+    //TODO: tabs to open/close sections
 
     public void submit(View view) {
         if (getFieldValue(R.id.matchNumber).equals("951")) {
@@ -224,6 +304,14 @@ public class MainActivity extends AppCompatActivity {
         } else if (getFieldValue(R.id.matchNumber).equals("999")) {
             //TODO: implement NFC stuff
         } else {
+            general = false;
+            auto = false;
+            teleop = false;
+            misc = false;
+            generalView(null);
+            autoView(null);
+            teleopView(null);
+            miscView(null);
             EditText name = findViewById(R.id.name);
             EditText matchNumber = findViewById(R.id.matchNumber);
             EditText teamNumber = findViewById(R.id.teamNumber);
@@ -254,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
             TODO write file
             DONE clear fields
              */
+
             matchNumber.setText("" + (Integer.parseInt("" + matchNumber.getText()) + 1));
             teamNumber.setText("");
             autoInnerBalls.setText("");

@@ -9,6 +9,7 @@
         android:id="@+id/generalTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="generalView"
         android:text="@string/general"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
@@ -43,10 +44,12 @@
         android:id="@+id/autoTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="autoView"
         android:text="@string/autonomous_balls_scored"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
     <LinearLayout
+        android:id="@+id/autoInnerHigh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -96,6 +99,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/autoHigh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -145,6 +149,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/autoLow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -197,10 +202,12 @@
         android:id="@+id/teleopTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="teleopView"
         android:text="@string/teleop_balls_scored"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
     <LinearLayout
+        android:id="@+id/teleopInnerHigh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -250,6 +257,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/teleopHigh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -299,6 +307,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/teleopLow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -351,6 +360,7 @@
         android:id="@+id/miscTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="miscView"
         android:text="@string/misc"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
@@ -358,6 +368,7 @@
         android:id="@+id/miscDefenseTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="miscDefenseView"
         android:text="@string/defense"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle" />
 
@@ -371,6 +382,25 @@
         android:textOff="@string/no"
         android:textOn="@string/yes" />
 
+    <SeekBar
+        android:id="@+id/defenseEffectiveness"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10"
+        android:progress="0"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/defenseEffectivenessQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/defense_effectiveness_question"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
     <Switch
         android:id="@+id/defensePlayedAgainst"
         android:layout_width="match_parent"
@@ -381,28 +411,10 @@
         android:textOn="@string/yes" />
 
     <TextView
-        android:id="@+id/defenseEffectivenessQuestion"
-        tools:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/defense_effectiveness_question"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
-        android:visibility="gone" />
-
-    <SeekBar
-        android:id="@+id/defenseEffectiveness"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        tools:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="10"
-        android:progress="0"
-        android:visibility="gone" />
-
-    <TextView
         android:id="@+id/miscClimbTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="miscClimbView"
         android:text="@string/climb_question"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle" />
 
