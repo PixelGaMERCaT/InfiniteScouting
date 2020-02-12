@@ -86,6 +86,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoInnerMinusFive"
                     android:text="@string/minus5" />
 
                 <Button
@@ -93,6 +94,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoInnerMinusOne"
                     android:text="@string/minus1" />
 
                 <Button
@@ -100,6 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoInnerAddOne"
                     android:text="@string/plus1" />
 
                 <Button
@@ -107,6 +110,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoInnerAddFive"
                     android:text="@string/plus5" />
 
             </LinearLayout>
@@ -131,6 +135,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoHighMinusFive"
                     android:text="@string/minus5" />
 
                 <Button
@@ -138,6 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoHighMinusOne"
                     android:text="@string/minus1" />
 
                 <Button
@@ -145,6 +151,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoHighAddOne"
                     android:text="@string/plus1" />
 
                 <Button
@@ -152,6 +159,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoHighAddFive"
                     android:text="@string/plus5" />
 
             </LinearLayout>
@@ -176,6 +184,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoLowMinusFive"
                     android:text="@string/minus5" />
 
                 <Button
@@ -183,6 +192,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoLowMinusOne"
                     android:text="@string/minus1" />
 
                 <Button
@@ -190,6 +200,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoLowAddOne"
                     android:text="@string/plus1" />
 
                 <Button
@@ -197,6 +208,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="autoLowAddFive"
                     android:text="@string/plus5" />
 
             </LinearLayout>
@@ -228,6 +240,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopInnerMinusFive"
                     android:text="@string/minus5" />
 
                 <Button
@@ -235,6 +248,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopInnerMinusOne"
                     android:text="@string/minus1" />
 
                 <Button
@@ -242,6 +256,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopInnerAddOne"
                     android:text="@string/plus1" />
 
                 <Button
@@ -249,6 +264,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopInnerAddFive"
                     android:text="@string/plus5" />
 
             </LinearLayout>
@@ -273,6 +289,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopHighMinusFive"
                     android:text="@string/minus5" />
 
                 <Button
@@ -280,6 +297,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopHighMinusOne"
                     android:text="@string/minus1" />
 
                 <Button
@@ -287,6 +305,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopHighAddOne"
                     android:text="@string/plus1" />
 
                 <Button
@@ -294,6 +313,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopHighAddFive"
                     android:text="@string/plus5" />
 
             </LinearLayout>
@@ -318,6 +338,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopLowMinusFive"
                     android:text="@string/minus5" />
 
                 <Button
@@ -325,6 +346,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopLowMinusOne"
                     android:text="@string/minus1" />
 
                 <Button
@@ -332,6 +354,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopLowAddOne"
                     android:text="@string/plus1" />
 
                 <Button
@@ -339,6 +362,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".125"
+                    android:onClick="teleopLowAddFive"
                     android:text="@string/plus5" />
 
             </LinearLayout>
@@ -361,7 +385,9 @@
                 android:id="@+id/defensePlayed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="defenseView"
                 android:text="@string/defense_played"
+                android:showText="true"
                 android:textOff="@string/no"
                 android:textOn="@string/yes" />
 
@@ -370,6 +396,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/defense_played_against"
+                android:showText="true"
                 android:textOff="@string/no"
                 android:textOn="@string/yes" />
 

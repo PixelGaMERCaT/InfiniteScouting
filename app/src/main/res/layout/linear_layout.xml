@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/generalTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/general"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/name"
+        android:importantForAutofill="no"
+        android:inputType="textShortMessage|text" />
+
+    <EditText
+        android:id="@+id/matchNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/match_number"
+        android:importantForAutofill="no"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/teamNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/team_number"
+        android:importantForAutofill="no"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/autoTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/autonomous_balls_scored"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/autoInnerHighBalls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ems="10"
+            android:hint="@string/inner_high"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/autoInnerHighMinusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoInnerMinusFive"
+            android:text="@string/minus5" />
+
+        <Button
+            android:id="@+id/autoInnerHighMinusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoInnerMinusOne"
+            android:text="@string/minus1" />
+
+        <Button
+            android:id="@+id/autoInnerHighPlusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoInnerAddOne"
+            android:text="@string/plus1" />
+
+        <Button
+            android:id="@+id/autoInnerHighPlusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoInnerAddFive"
+            android:text="@string/plus5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/autoHighBalls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ems="10"
+            android:hint="@string/high"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/autoHighMinusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoHighMinusFive"
+            android:text="@string/minus5" />
+
+        <Button
+            android:id="@+id/autoHighMinusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoHighMinusOne"
+            android:text="@string/minus1" />
+
+        <Button
+            android:id="@+id/autoHighPlusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoHighAddOne"
+            android:text="@string/plus1" />
+
+        <Button
+            android:id="@+id/autoHighPlusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoHighAddFive"
+            android:text="@string/plus5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/autoLowBalls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ems="10"
+            android:hint="@string/low"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/autoLowMinusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoLowMinusFive"
+            android:text="@string/minus5" />
+
+        <Button
+            android:id="@+id/autoLowMinusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoLowMinusOne"
+            android:text="@string/minus1" />
+
+        <Button
+            android:id="@+id/autoLowPlusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoLowAddOne"
+            android:text="@string/plus1" />
+
+        <Button
+            android:id="@+id/autoLowPlusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="autoLowAddFive"
+            android:text="@string/plus5" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/teleopTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/teleop_balls_scored"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/teleopInnerHighBalls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ems="10"
+            android:hint="@string/inner_high"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/teleopInnerHighMinusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopInnerMinusFive"
+            android:text="@string/minus5" />
+
+        <Button
+            android:id="@+id/teleopInnerHighMinusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopInnerMinusOne"
+            android:text="@string/minus1" />
+
+        <Button
+            android:id="@+id/teleopInnerHighPlusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopInnerAddOne"
+            android:text="@string/plus1" />
+
+        <Button
+            android:id="@+id/teleopInnerHighPlusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopInnerAddFive"
+            android:text="@string/plus5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/teleopHighBalls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ems="10"
+            android:hint="@string/high"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/teleopHighMinusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopHighMinusFive"
+            android:text="@string/minus5" />
+
+        <Button
+            android:id="@+id/teleopHighMinusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopHighMinusOne"
+            android:text="@string/minus1" />
+
+        <Button
+            android:id="@+id/teleopHighPlusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopHighAddOne"
+            android:text="@string/plus1" />
+
+        <Button
+            android:id="@+id/teleopHighPlusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopHighAddFive"
+            android:text="@string/plus5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/teleopLowBalls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ems="10"
+            android:hint="@string/low"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/teleopLowMinusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopLowMinusFive"
+            android:text="@string/minus5" />
+
+        <Button
+            android:id="@+id/teleopLowMinusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopLowMinusOne"
+            android:text="@string/minus1" />
+
+        <Button
+            android:id="@+id/teleopLowPlusOne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopLowAddOne"
+            android:text="@string/plus1" />
+
+        <Button
+            android:id="@+id/teleopLowPlusFive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".125"
+            android:onClick="teleopLowAddFive"
+            android:text="@string/plus5" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/miscTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/misc"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+
+    <TextView
+        android:id="@+id/miscDefenseTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/defense"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle" />
+
+    <Switch
+        android:id="@+id/defensePlayed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="defenseView"
+        android:showText="true"
+        android:text="@string/defense_played"
+        android:textOff="@string/no"
+        android:textOn="@string/yes" />
+
+    <Switch
+        android:id="@+id/defensePlayedAgainst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showText="true"
+        android:text="@string/defense_played_against"
+        android:textOff="@string/no"
+        android:textOn="@string/yes" />
+
+    <TextView
+        android:id="@+id/defenseEffectivenessQuestion"
+        tools:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/defense_effectiveness_question"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
+        android:visibility="gone" />
+
+    <SeekBar
+        android:id="@+id/defenseEffectiveness"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        tools:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10"
+        android:progress="0"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/miscClimbTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/climb_question"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle" />
+
+    <RadioGroup
+        android:id="@+id/climbRadio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RadioButton
+            android:id="@+id/climb5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/climb_5" />
+
+        <RadioButton
+            android:id="@+id/climb4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/climb_4" />
+
+        <RadioButton
+            android:id="@+id/climb3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/climb_3" />
+
+        <RadioButton
+            android:id="@+id/climb2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/climb_2" />
+
+        <RadioButton
+            android:id="@+id/climb1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/climb_1" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/comments_question"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle" />
+
+    <EditText
+        android:id="@+id/commentBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/comments"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="submit"
+        android:text="@string/save" />
+</LinearLayout>
