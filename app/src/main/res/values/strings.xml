@@ -32,6 +32,7 @@
     <string name="start_nfc_server">Start NFC Server</string>
     <string name="export">Export</string>
     <string name="delete_csv">Delete CSV</string>
+    <string name="show_csv">Show CSV</string>
 
 
 </resources>

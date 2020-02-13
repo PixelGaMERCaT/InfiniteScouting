@@ -60,12 +60,12 @@ public class AdminPanelActivity extends AppCompatActivity {
         }
     }
 
-    public void clearExportedData(View view) {
-
-    }
-
     public void deleteCSV(View view) {
         MainActivity.writeCSV(this, "");
+    }
+
+    public void showCSV(View view) {
+        ((TextView) findViewById(R.id.outBox)).setText(MainActivity.readCSV(this));
     }
 
     public void export(View view) {
@@ -88,6 +88,7 @@ public class AdminPanelActivity extends AppCompatActivity {
             writer.append(data);
             writer.flush();
             writer.close();
+            Toast.makeText(this, "File saved.", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             e.printStackTrace();
