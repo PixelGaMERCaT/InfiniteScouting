@@ -1,25 +1,39 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback, NfcAdapter.CreateNdefMessageCallback {
 
     private boolean general, auto, teleop, misc, miscDefense, miscClimb;
+    public static final String csvFilename = "data.csv";
+    private NfcAdapter nfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +45,19 @@ public class MainActivity extends AppCompatActivity {
         miscClimb = true;
         super.onCreate(savedInstanceState);
 
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
         RelativeLayout relativeLayout = new RelativeLayout(this);
-        //RelativeLayout.LayoutParams relativeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //relativeLayoutParams.setMargins(16,16,16,16);
-        //relativeLayout.setLayoutParams(relativeLayoutParams);
 
         MyScrollView myScrollView = new MyScrollView(this);
         RelativeLayout.LayoutParams myScrollViewParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        myScrollViewParams.setMargins(16,16,16,16);
+        myScrollViewParams.setMargins(16, 16, 16, 16);
         myScrollView.setLayoutParams(myScrollViewParams);
 
         myScrollView.addView(LayoutInflater.from(this).inflate(R.layout.linear_layout, null));
 
         relativeLayout.addView(myScrollView);
         setContentView(relativeLayout);
-        //setContentView(R.layout.activity_main);
     }
 
     private void createDialog(String title, String message) {
@@ -75,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 5 < 1) ? "" : "" + (Integer.parseInt(val) - 5));
         }
     }
+
     public void autoInnerMinusOne(View view) {
         EditText et = findViewById(R.id.autoInnerHighBalls);
         String val = getFieldValue(R.id.autoInnerHighBalls);
@@ -82,16 +95,19 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 1 < 1) ? "" : "" + (Integer.parseInt(val) - 1));
         }
     }
+
     public void autoInnerAddOne(View view) {
         EditText et = findViewById(R.id.autoInnerHighBalls);
         String val = getFieldValue(R.id.autoInnerHighBalls);
-        et.setText((val.isEmpty()) ? "1" : ""+(Integer.parseInt(val) + 1));
+        et.setText((val.isEmpty()) ? "1" : "" + (Integer.parseInt(val) + 1));
     }
+
     public void autoInnerAddFive(View view) {
         EditText et = findViewById(R.id.autoInnerHighBalls);
         String val = getFieldValue(R.id.autoInnerHighBalls);
-        et.setText((val.isEmpty()) ? "5" : ""+(Integer.parseInt(val) + 5));
+        et.setText((val.isEmpty()) ? "5" : "" + (Integer.parseInt(val) + 5));
     }
+
     public void autoHighMinusFive(View view) {
         EditText et = findViewById(R.id.autoHighBalls);
         String val = getFieldValue(R.id.autoHighBalls);
@@ -99,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 5 < 1) ? "" : "" + (Integer.parseInt(val) - 5));
         }
     }
+
     public void autoHighMinusOne(View view) {
         EditText et = findViewById(R.id.autoHighBalls);
         String val = getFieldValue(R.id.autoHighBalls);
@@ -106,16 +123,19 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 1 < 1) ? "" : "" + (Integer.parseInt(val) - 1));
         }
     }
+
     public void autoHighAddOne(View view) {
         EditText et = findViewById(R.id.autoHighBalls);
         String val = getFieldValue(R.id.autoHighBalls);
-        et.setText((val.isEmpty()) ? "1" : ""+(Integer.parseInt(val) + 1));
+        et.setText((val.isEmpty()) ? "1" : "" + (Integer.parseInt(val) + 1));
     }
+
     public void autoHighAddFive(View view) {
         EditText et = findViewById(R.id.autoHighBalls);
         String val = getFieldValue(R.id.autoHighBalls);
-        et.setText((val.isEmpty()) ? "5" : ""+(Integer.parseInt(val) + 5));
+        et.setText((val.isEmpty()) ? "5" : "" + (Integer.parseInt(val) + 5));
     }
+
     public void autoLowMinusFive(View view) {
         EditText et = findViewById(R.id.autoLowBalls);
         String val = getFieldValue(R.id.autoLowBalls);
@@ -123,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 5 < 1) ? "" : "" + (Integer.parseInt(val) - 5));
         }
     }
+
     public void autoLowMinusOne(View view) {
         EditText et = findViewById(R.id.autoLowBalls);
         String val = getFieldValue(R.id.autoLowBalls);
@@ -130,15 +151,17 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 1 < 1) ? "" : "" + (Integer.parseInt(val) - 1));
         }
     }
+
     public void autoLowAddOne(View view) {
         EditText et = findViewById(R.id.autoLowBalls);
         String val = getFieldValue(R.id.autoLowBalls);
-        et.setText((val.isEmpty()) ? "1" : ""+(Integer.parseInt(val) + 1));
+        et.setText((val.isEmpty()) ? "1" : "" + (Integer.parseInt(val) + 1));
     }
+
     public void autoLowAddFive(View view) {
         EditText et = findViewById(R.id.autoLowBalls);
         String val = getFieldValue(R.id.autoLowBalls);
-        et.setText((val.isEmpty()) ? "5" : ""+(Integer.parseInt(val) + 5));
+        et.setText((val.isEmpty()) ? "5" : "" + (Integer.parseInt(val) + 5));
     }
 
     public void teleopInnerMinusFive(View view) {
@@ -148,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 5 < 1) ? "" : "" + (Integer.parseInt(val) - 5));
         }
     }
+
     public void teleopInnerMinusOne(View view) {
         EditText et = findViewById(R.id.teleopInnerHighBalls);
         String val = getFieldValue(R.id.teleopInnerHighBalls);
@@ -155,16 +179,19 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 1 < 1) ? "" : "" + (Integer.parseInt(val) - 1));
         }
     }
+
     public void teleopInnerAddOne(View view) {
         EditText et = findViewById(R.id.teleopInnerHighBalls);
         String val = getFieldValue(R.id.teleopInnerHighBalls);
-        et.setText((val.isEmpty()) ? "1" : ""+(Integer.parseInt(val) + 1));
+        et.setText((val.isEmpty()) ? "1" : "" + (Integer.parseInt(val) + 1));
     }
+
     public void teleopInnerAddFive(View view) {
         EditText et = findViewById(R.id.teleopInnerHighBalls);
         String val = getFieldValue(R.id.teleopInnerHighBalls);
-        et.setText((val.isEmpty()) ? "5" : ""+(Integer.parseInt(val) + 5));
+        et.setText((val.isEmpty()) ? "5" : "" + (Integer.parseInt(val) + 5));
     }
+
     public void teleopHighMinusFive(View view) {
         EditText et = findViewById(R.id.teleopHighBalls);
         String val = getFieldValue(R.id.teleopHighBalls);
@@ -172,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 5 < 1) ? "" : "" + (Integer.parseInt(val) - 5));
         }
     }
+
     public void teleopHighMinusOne(View view) {
         EditText et = findViewById(R.id.teleopHighBalls);
         String val = getFieldValue(R.id.teleopHighBalls);
@@ -179,16 +207,19 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 1 < 1) ? "" : "" + (Integer.parseInt(val) - 1));
         }
     }
+
     public void teleopHighAddOne(View view) {
         EditText et = findViewById(R.id.teleopHighBalls);
         String val = getFieldValue(R.id.teleopHighBalls);
-        et.setText((val.isEmpty()) ? "1" : ""+(Integer.parseInt(val) + 1));
+        et.setText((val.isEmpty()) ? "1" : "" + (Integer.parseInt(val) + 1));
     }
+
     public void teleopHighAddFive(View view) {
         EditText et = findViewById(R.id.teleopHighBalls);
         String val = getFieldValue(R.id.teleopHighBalls);
-        et.setText((val.isEmpty()) ? "5" : ""+(Integer.parseInt(val) + 5));
+        et.setText((val.isEmpty()) ? "5" : "" + (Integer.parseInt(val) + 5));
     }
+
     public void teleopLowMinusFive(View view) {
         EditText et = findViewById(R.id.teleopLowBalls);
         String val = getFieldValue(R.id.teleopLowBalls);
@@ -196,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 5 < 1) ? "" : "" + (Integer.parseInt(val) - 5));
         }
     }
+
     public void teleopLowMinusOne(View view) {
         EditText et = findViewById(R.id.teleopLowBalls);
         String val = getFieldValue(R.id.teleopLowBalls);
@@ -203,15 +235,17 @@ public class MainActivity extends AppCompatActivity {
             et.setText((Integer.parseInt(val) - 1 < 1) ? "" : "" + (Integer.parseInt(val) - 1));
         }
     }
+
     public void teleopLowAddOne(View view) {
         EditText et = findViewById(R.id.teleopLowBalls);
         String val = getFieldValue(R.id.teleopLowBalls);
-        et.setText((val.isEmpty()) ? "1" : ""+(Integer.parseInt(val) + 1));
+        et.setText((val.isEmpty()) ? "1" : "" + (Integer.parseInt(val) + 1));
     }
+
     public void teleopLowAddFive(View view) {
         EditText et = findViewById(R.id.teleopLowBalls);
         String val = getFieldValue(R.id.teleopLowBalls);
-        et.setText((val.isEmpty()) ? "5" : ""+(Integer.parseInt(val) + 5));
+        et.setText((val.isEmpty()) ? "5" : "" + (Integer.parseInt(val) + 5));
     }
 
     public void defenseView(View view) {
@@ -225,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public void generalView(View view) {
         if (general = !general) {
             findViewById(R.id.name).setVisibility(View.VISIBLE);
@@ -236,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.teamNumber).setVisibility(View.GONE);
         }
     }
+
     public void autoView(View view) {
         if (auto = !auto) {
             findViewById(R.id.autoInnerHigh).setVisibility(View.VISIBLE);
@@ -247,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.autoLow).setVisibility(View.GONE);
         }
     }
+
     public void teleopView(View view) {
         if (teleop = !teleop) {
             findViewById(R.id.teleopInnerHigh).setVisibility(View.VISIBLE);
@@ -258,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.teleopLow).setVisibility(View.GONE);
         }
     }
+
     public void miscView(View view) {
         miscDefense = misc;
         miscClimb = misc;
@@ -277,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.commentBox).setVisibility(View.GONE);
         }
     }
+
     public void miscDefenseView(View view) {
         if (miscDefense = !miscDefense) {
             findViewById(R.id.defensePlayed).setVisibility(View.VISIBLE);
@@ -289,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.defensePlayedAgainst).setVisibility(View.GONE);
         }
     }
+
     public void miscClimbView(View view) {
         if (miscClimb = !miscClimb) {
             findViewById(R.id.climbRadio).setVisibility(View.VISIBLE);
@@ -296,13 +336,33 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.climbRadio).setVisibility(View.GONE);
         }
     }
-    //TODO: tabs to open/close sections
+
+    @Override
+    public void onNdefPushComplete(NfcEvent event) {
+
+    }
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent event) {
+        NdefRecord[] record = {new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], readCSV(this).getBytes())};
+        return new NdefMessage(record);
+    }
 
     public void submit(View view) {
         if (getFieldValue(R.id.matchNumber).equals("951")) {
-            //TODO: go to admin panel
+            Intent intent = new Intent(getApplicationContext(), AdminPanelActivity.class);
+//                EditText editText = (EditText) findViewById(R.id.editText);
+//                String message = editText.getText().toString();
+//                intent.putExtra("com.example.app.MESSAGE","b");
+            startActivity(intent);
         } else if (getFieldValue(R.id.matchNumber).equals("999")) {
-            //TODO: implement NFC stuff
+            //read file input
+
+            /*
+            DONE: read from file
+            TODO: send to nfc server
+            TODO: close file
+             */
         } else {
             general = false;
             auto = false;
@@ -330,11 +390,39 @@ public class MainActivity extends AppCompatActivity {
             if (("" + name.getText()).isEmpty() ||
                     ("" + matchNumber.getText()).isEmpty() ||
                     ("" + teamNumber.getText()).isEmpty() ||
-                    climbRadio.getCheckedRadioButtonId() == -1
-            ) {
+                    climbRadio.getCheckedRadioButtonId() == -1) {
                 createDialog("Incomplete", "Please fill out all required fields.");
                 return;
             }
+            String contents = readCSV(this);
+            //write to file
+            contents += getFieldValue(R.id.name) + "," +getFieldValue(R.id.matchNumber) + "," +getFieldValue(R.id.teamNumber) + "," +getFieldValue(R.id.autoInnerHighBalls) + "," +getFieldValue(R.id.autoHighBalls) + "," +getFieldValue(R.id.autoLowBalls) + "," +getFieldValue(R.id.teleopInnerHighBalls) + "," +getFieldValue(R.id.teleopHighBalls) + "," +getFieldValue(R.id.teleopLowBalls) + ",";
+            boolean defPlayed = ((Switch) findViewById(R.id.defensePlayed)).isChecked();
+            if (defPlayed) {
+                contents += "true," + ((SeekBar) findViewById(R.id.defenseEffectiveness)).getProgress() + ",";
+            } else {
+                contents += "false,N/A,";
+            }
+            contents += ((((Switch) findViewById(R.id.defensePlayedAgainst)).isChecked())) ? "true," : "false,";
+            switch (((RadioGroup) findViewById(R.id.climbRadio)).getCheckedRadioButtonId()) {
+                case R.id.climb1:
+                    contents += "1";
+                    break;
+                case R.id.climb2:
+                    contents += "2";
+                    break;
+                case R.id.climb3:
+                    contents += "3";
+                    break;
+                case R.id.climb4:
+                    contents += "4";
+                    break;
+                case R.id.climb5:
+                    contents += "5";
+                    break;
+            }
+            writeCSV(this, contents);
+
             /*
             DONE check data validity
             TODO read file
@@ -358,8 +446,47 @@ public class MainActivity extends AppCompatActivity {
             climbRadio.clearCheck();
             commentBox.setText("");
 
+        }
 
+    }
 
+    public static void writeCSV(Context c, String contents) {
+        try {
+            FileOutputStream fos = c.openFileOutput(csvFilename, Context.MODE_PRIVATE);
+            fos.write(contents.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    public static String readCSV(Context c) {
+        String contents = "";
+        try {
+            FileInputStream fis = c.openFileInput(csvFilename);
+            InputStreamReader inputStreamReader = new InputStreamReader(fis);
+            StringBuilder stringBuilder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                stringBuilder.append(line).append('\n');
+                line = reader.readLine();
+            }
+            contents = stringBuilder.toString();
+            fis.close();
+            inputStreamReader.close();
+        } catch (FileNotFoundException e) {
+            // make a file if it doesn't exist
+            File data = new File(c.getFilesDir(), csvFilename);
+            try {
+                data.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contents;
+    }
+
 }

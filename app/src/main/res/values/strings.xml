@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Scouting App</string>
     <string name="general">General</string>
     <string name="save">Save</string>
     <string name="name">Name</string>
@@ -29,6 +29,9 @@
     <string name="comments_question">Any additional comments:</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
+    <string name="start_nfc_server">Start NFC Server</string>
+    <string name="export">Export</string>
+    <string name="delete_csv">Delete CSV</string>
 
 
 </resources>
