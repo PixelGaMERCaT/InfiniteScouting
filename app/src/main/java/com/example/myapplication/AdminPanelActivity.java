@@ -34,7 +34,7 @@ import androidx.core.content.ContextCompat;
 
 public class AdminPanelActivity extends AppCompatActivity {
 
-    private boolean nfcRunning;
+//    private boolean nfcRunning;
     private String data;
     private NfcAdapter nfcAdapter;
 
@@ -42,20 +42,26 @@ public class AdminPanelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nfcRunning = false;
+//        nfcRunning = false;
         setContentView(R.layout.admin_panel);
         data = MainActivity.readCSV(this);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter != null) {
+            nfcAdapter.setNdefPushMessage(null, this);
+        }
 
     }
 
     @Override
     public void onNewIntent(Intent nfcIntent) {
-        super.onNewIntent(nfcIntent);
+        super.onNewIntent(null);
+        Toast.makeText(this, "received", Toast.LENGTH_SHORT).show();
+
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(nfcIntent.getAction())) {
             Parcelable[] receivedArray = nfcIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             if (receivedArray != null) {
                 data += new String(((NdefMessage) receivedArray[0]).getRecords()[0].getPayload());
+                Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -65,7 +71,7 @@ public class AdminPanelActivity extends AppCompatActivity {
     }
 
     public void showCSV(View view) {
-        ((TextView) findViewById(R.id.outBox)).setText(MainActivity.readCSV(this));
+        ((TextView) findViewById(R.id.outBox)).setText(data);
     }
 
     public void export(View view) {
@@ -88,7 +94,7 @@ public class AdminPanelActivity extends AppCompatActivity {
             writer.append(data);
             writer.flush();
             writer.close();
-            Toast.makeText(this, "File saved.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File saved to " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             e.printStackTrace();
