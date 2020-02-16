@@ -1,17 +1,23 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.nfc.tech.Ndef;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +26,23 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback, NfcAdapter.CreateNdefMessageCallback {
+public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
     private boolean general, auto, teleop, misc, miscDefense, miscClimb;
     public static final String csvFilename = "data.csv";
+    private String data;
     private NfcAdapter nfcAdapter;
 
     @Override
@@ -43,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         misc = true;
         miscDefense = true;
         miscClimb = true;
+        data = readCSV(this);
         super.onCreate(savedInstanceState);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -58,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
 
         relativeLayout.addView(myScrollView);
         setContentView(relativeLayout);
+        if (nfcAdapter != null) {
+            nfcAdapter.setNdefPushMessageCallback(this, this);
+        }
+
     }
 
     private void createDialog(String title, String message) {
@@ -265,10 +280,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             findViewById(R.id.name).setVisibility(View.VISIBLE);
             findViewById(R.id.matchNumber).setVisibility(View.VISIBLE);
             findViewById(R.id.teamNumber).setVisibility(View.VISIBLE);
+            ((TextView) view).setText(R.string.general_open);
+
         } else {
             findViewById(R.id.name).setVisibility(View.GONE);
             findViewById(R.id.matchNumber).setVisibility(View.GONE);
             findViewById(R.id.teamNumber).setVisibility(View.GONE);
+            ((TextView) view).setText(R.string.general_closed);
+
         }
     }
 
@@ -277,10 +296,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             findViewById(R.id.autoInnerHigh).setVisibility(View.VISIBLE);
             findViewById(R.id.autoHigh).setVisibility(View.VISIBLE);
             findViewById(R.id.autoLow).setVisibility(View.VISIBLE);
+            ((TextView) view).setText(R.string.autonomous_balls_scored_open);
+
         } else {
             findViewById(R.id.autoInnerHigh).setVisibility(View.GONE);
             findViewById(R.id.autoHigh).setVisibility(View.GONE);
             findViewById(R.id.autoLow).setVisibility(View.GONE);
+            ((TextView) view).setText(R.string.autonomous_balls_scored_closed);
+
         }
     }
 
@@ -289,10 +312,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             findViewById(R.id.teleopInnerHigh).setVisibility(View.VISIBLE);
             findViewById(R.id.teleopHigh).setVisibility(View.VISIBLE);
             findViewById(R.id.teleopLow).setVisibility(View.VISIBLE);
+            ((TextView) view).setText(R.string.teleop_balls_scored_open);
+
         } else {
             findViewById(R.id.teleopInnerHigh).setVisibility(View.GONE);
             findViewById(R.id.teleopHigh).setVisibility(View.GONE);
             findViewById(R.id.teleopLow).setVisibility(View.GONE);
+            ((TextView) view).setText(R.string.teleop_balls_scored_closed);
+
         }
     }
 
@@ -306,13 +333,13 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             findViewById(R.id.miscClimbTab).setVisibility(View.VISIBLE);
             findViewById(R.id.comments).setVisibility(View.VISIBLE);
             findViewById(R.id.commentBox).setVisibility(View.VISIBLE);
-
-
+            ((TextView) view).setText(R.string.misc_open);
         } else {
             findViewById(R.id.miscDefenseTab).setVisibility(View.GONE);
             findViewById(R.id.miscClimbTab).setVisibility(View.GONE);
             findViewById(R.id.comments).setVisibility(View.GONE);
             findViewById(R.id.commentBox).setVisibility(View.GONE);
+            ((TextView) view).setText(R.string.misc_closed);
         }
     }
 
@@ -337,10 +364,18 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         }
     }
 
-    @Override
-    public void onNdefPushComplete(NfcEvent event) {
-
-    }
+//    public void onResume() {
+//        super.onResume();
+//        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+//        nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+//    }
+//
+//    public void onPause() {
+//        super.onPause();
+//        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+//        nfcAdapter.disableForegroundDispatch(this);
+//    }
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
@@ -349,29 +384,41 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     }
 
     public void submit(View view) {
-        if (getFieldValue(R.id.matchNumber).equals("951")) {
+        if (getFieldValue(R.id.matchNumber).equals("9731")) {
             Intent intent = new Intent(getApplicationContext(), AdminPanelActivity.class);
-//                EditText editText = (EditText) findViewById(R.id.editText);
-//                String message = editText.getText().toString();
-//                intent.putExtra("com.example.app.MESSAGE","b");
             startActivity(intent);
-        } else if (getFieldValue(R.id.matchNumber).equals("999")) {
-            //read file input
+        } else if (getFieldValue(R.id.matchNumber).equals("1379")) {
+            // read file input
+            if (Build.VERSION.SDK_INT > 23) {
+                // Check whether this app has write external storage permission or not.
+                int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                // If do not grant write external storage permission.
+                if (writeExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+                    // Request user to grant write external storage permission.
+                    this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+                }
+            }
+            try {
+                File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "export.csv");
+                FileWriter writer = new FileWriter(f);
+                writer.append(data);
+                writer.flush();
+                writer.close();
+                Toast.makeText(this, "File saved to " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), Toast.LENGTH_SHORT).show();
 
-            /*
-            DONE: read from file
-            TODO: send to nfc server
-            TODO: close file
-             */
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
         } else {
             general = false;
             auto = false;
             teleop = false;
             misc = false;
-            generalView(null);
-            autoView(null);
-            teleopView(null);
-            miscView(null);
+            generalView(findViewById(R.id.generalTab));
+            autoView(findViewById(R.id.autoTab));
+            teleopView(findViewById(R.id.teleopTab));
+            miscView(findViewById(R.id.miscTab));
             EditText name = findViewById(R.id.name);
             EditText matchNumber = findViewById(R.id.matchNumber);
             EditText teamNumber = findViewById(R.id.teamNumber);
@@ -397,13 +444,13 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             String contents = readCSV(this);
             //write to file
             contents += getFieldValue(R.id.name) + "," +getFieldValue(R.id.matchNumber) + "," +getFieldValue(R.id.teamNumber) + "," +getFieldValue(R.id.autoInnerHighBalls) + "," +getFieldValue(R.id.autoHighBalls) + "," +getFieldValue(R.id.autoLowBalls) + "," +getFieldValue(R.id.teleopInnerHighBalls) + "," +getFieldValue(R.id.teleopHighBalls) + "," +getFieldValue(R.id.teleopLowBalls) + ",";
-            boolean defPlayed = ((Switch) findViewById(R.id.defensePlayed)).isChecked();
+            boolean defPlayed = (defensePlayed).isChecked();
             if (defPlayed) {
-                contents += "true," + ((SeekBar) findViewById(R.id.defenseEffectiveness)).getProgress() + ",";
+                contents += "true," + (defenseEffectiveness).getProgress() + ",";
             } else {
                 contents += "false,N/A,";
             }
-            contents += ((((Switch) findViewById(R.id.defensePlayedAgainst)).isChecked())) ? "true," : "false,";
+            contents += (((defensePlayedAgainst).isChecked())) ? "true," : "false,";
             switch (((RadioGroup) findViewById(R.id.climbRadio)).getCheckedRadioButtonId()) {
                 case R.id.climb1:
                     contents += "1";
@@ -422,15 +469,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                     break;
             }
             writeCSV(this, contents);
-
-            /*
-            DONE check data validity
-            TODO read file
-            TODO append to file
-            TODO write file
-            DONE clear fields
-             */
-
             matchNumber.setText("" + (Integer.parseInt("" + matchNumber.getText()) + 1));
             teamNumber.setText("");
             autoInnerBalls.setText("");
@@ -445,11 +483,23 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             defenseEffectiveness.setProgress(0);
             climbRadio.clearCheck();
             commentBox.setText("");
-
+            Toast.makeText(this, "Successfully saved.", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(null);
+//        ((TextView) findViewById(R.id.outBox)).setText(intent.getAction());
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            Parcelable[] receivedArray = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            if (receivedArray != null) {
+                data += new String(((NdefMessage) receivedArray[0]).getRecords()[0].getPayload());
+                writeCSV(this, data);
+            }
+        }
+    }
     public static void writeCSV(Context c, String contents) {
         try {
             FileOutputStream fos = c.openFileOutput(csvFilename, Context.MODE_PRIVATE);

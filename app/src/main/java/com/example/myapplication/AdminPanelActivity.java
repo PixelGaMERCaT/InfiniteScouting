@@ -34,36 +34,19 @@ import androidx.core.content.ContextCompat;
 
 public class AdminPanelActivity extends AppCompatActivity {
 
-//    private boolean nfcRunning;
     private String data;
-    private NfcAdapter nfcAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        nfcRunning = false;
         setContentView(R.layout.admin_panel);
         data = MainActivity.readCSV(this);
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter != null) {
             nfcAdapter.setNdefPushMessage(null, this);
         }
 
-    }
-
-    @Override
-    public void onNewIntent(Intent nfcIntent) {
-        super.onNewIntent(null);
-        Toast.makeText(this, "received", Toast.LENGTH_SHORT).show();
-
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(nfcIntent.getAction())) {
-            Parcelable[] receivedArray = nfcIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            if (receivedArray != null) {
-                data += new String(((NdefMessage) receivedArray[0]).getRecords()[0].getPayload());
-                Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public void deleteCSV(View view) {
@@ -89,7 +72,6 @@ public class AdminPanelActivity extends AppCompatActivity {
         }
         try {
             File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "export.csv");
-//            Toast.makeText(this, ""+f., Toast.LENGTH_SHORT).show();
             FileWriter writer = new FileWriter(f);
             writer.append(data);
             writer.flush();
@@ -101,39 +83,6 @@ public class AdminPanelActivity extends AppCompatActivity {
 
         }
 
-//        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        intent.setType("text/csv");
-//        intent.putExtra(Intent.EXTRA_TITLE, "export.csv");
-//        startActivityForResult(intent, 1);
-
-        //DONE: Export all data as movable file
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-//        super.onActivityResult(requestCode, resultCode, resultData);
-//        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-//            // The result data contains a URI for the document or directory that
-//            // the user selected.
-//            Uri uri;
-//            if (resultData != null) {
-//                uri = resultData.getData();
-//                try {
-//                    ParcelFileDescriptor pfd = this.getContentResolver().openFileDescriptor(uri, "w");
-//                    FileOutputStream fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
-//                    fileOutputStream.write(data.getBytes());
-//                    // Let the document provider know you're done by closing the stream.
-//                    fileOutputStream.close();
-//                    pfd.close();
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
-
 
 }
