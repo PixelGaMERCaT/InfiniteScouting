@@ -388,7 +388,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             Intent intent = new Intent(getApplicationContext(), AdminPanelActivity.class);
             startActivity(intent);
         } else if (getFieldValue(R.id.matchNumber).equals("1379")) {
-            // read file input
             if (Build.VERSION.SDK_INT > 23) {
                 // Check whether this app has write external storage permission or not.
                 int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -401,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             try {
                 File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "export.csv");
                 FileWriter writer = new FileWriter(f);
-                writer.append(data);
+                writer.append(readCSV(this));
                 writer.flush();
                 writer.close();
                 Toast.makeText(this, "File saved to " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), Toast.LENGTH_SHORT).show();
