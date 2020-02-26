@@ -21,12 +21,10 @@
     <string name="low">Low</string>
     <string name="climb_question">Did they climb?</string>
     <string name="defense">Defense</string>
-    <string name="climb_5">Yes, effectively</string>
-    <string name="climb_4">Yes, took a while</string>
-    <string name="climb_3">No, failed</string>
-    <string name="climb_2">No, didn\'t have time</string>
-    <string name="climb_1">No, no climbing mechanism</string>
-    <string name="defense_played">Defense Played?</string>
+    <string name="climb_3">Yes, effectively</string>
+    <string name="climb_2">No, but makes rendezvous</string>
+    <string name="climb_1">No, doesn\'t make rendezvous</string>
+    <string name="defense_played">Defense played?</string>
     <string name="defense_played_against">Were they defended against?</string>
     <string name="defense_effectiveness_question">How effective was their defense?</string>
     <string name="comments">Comments</string>
@@ -37,6 +35,7 @@
     <string name="export">Export</string>
     <string name="delete_csv">Delete CSV</string>
     <string name="show_csv">Show CSV</string>
+    <string name="initiation_line_crossed">Initiation line crossed?</string>
 
 
 </resources>

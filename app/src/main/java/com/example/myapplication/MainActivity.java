@@ -280,12 +280,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             findViewById(R.id.name).setVisibility(View.VISIBLE);
             findViewById(R.id.matchNumber).setVisibility(View.VISIBLE);
             findViewById(R.id.teamNumber).setVisibility(View.VISIBLE);
+            findViewById(R.id.initiationCrossed).setVisibility(View.VISIBLE);
             ((TextView) view).setText(R.string.general_open);
 
         } else {
             findViewById(R.id.name).setVisibility(View.GONE);
             findViewById(R.id.matchNumber).setVisibility(View.GONE);
             findViewById(R.id.teamNumber).setVisibility(View.GONE);
+            findViewById(R.id.initiationCrossed).setVisibility(View.GONE);
             ((TextView) view).setText(R.string.general_closed);
 
         }
@@ -429,6 +431,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             EditText teleopLowBalls = findViewById(R.id.teleopLowBalls);
             Switch defensePlayed = findViewById(R.id.defensePlayed);
             Switch defensePlayedAgainst = findViewById(R.id.defensePlayedAgainst);
+            Switch initiationCrossed = findViewById(R.id.initiationCrossed);
             SeekBar defenseEffectiveness = findViewById(R.id.defenseEffectiveness);
             RadioGroup climbRadio = findViewById(R.id.climbRadio);
             EditText commentBox = findViewById(R.id.commentBox);
@@ -442,7 +445,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             }
             String contents = readCSV(this);
             //write to file
-            contents += getFieldValue(R.id.name) + "," +getFieldValue(R.id.matchNumber) + "," +getFieldValue(R.id.teamNumber) + "," +getFieldValue(R.id.autoInnerHighBalls) + "," +getFieldValue(R.id.autoHighBalls) + "," +getFieldValue(R.id.autoLowBalls) + "," +getFieldValue(R.id.teleopInnerHighBalls) + "," +getFieldValue(R.id.teleopHighBalls) + "," +getFieldValue(R.id.teleopLowBalls) + ",";
+            contents += getFieldValue(R.id.name) + "," +getFieldValue(R.id.matchNumber) + "," + getFieldValue(R.id.teamNumber) + ",";
+            contents += (((initiationCrossed.isChecked()))) ? "true," : "false,";
+            contents += getFieldValue(R.id.autoInnerHighBalls) + "," +getFieldValue(R.id.autoHighBalls) + "," +getFieldValue(R.id.autoLowBalls) + "," +getFieldValue(R.id.teleopInnerHighBalls) + "," +getFieldValue(R.id.teleopHighBalls) + "," +getFieldValue(R.id.teleopLowBalls) + ",";
             boolean defPlayed = (defensePlayed).isChecked();
             if (defPlayed) {
                 contents += "true," + (defenseEffectiveness).getProgress() + ",";
@@ -457,14 +462,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 case R.id.climb2:
                     contents += "2";
                     break;
-                case R.id.climb3:
-                    contents += "3";
-                    break;
-                case R.id.climb4:
-                    contents += "4";
-                    break;
+//                case R.id.climb3:
+//                    contents += "3";
+//                    break;
+//                case R.id.climb4:
+//                    contents += "4";
+//                    break;
                 case R.id.climb5:
-                    contents += "5";
+                    contents += "3";
                     break;
             }
             writeCSV(this, contents);
@@ -479,6 +484,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             defensePlayed.setChecked(false);
             defenseView(null);
             defensePlayedAgainst.setChecked(false);
+            initiationCrossed.setChecked(false);
             defenseEffectiveness.setProgress(0);
             climbRadio.clearCheck();
             commentBox.setText("");

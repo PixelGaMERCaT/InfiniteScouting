@@ -40,12 +40,21 @@
         android:importantForAutofill="no"
         android:inputType="number" />
 
+    <Switch
+        android:id="@+id/initiationCrossed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showText="true"
+        android:text="@string/initiation_line_crossed"
+        android:textOff="@string/no"
+        android:textOn="@string/yes" />
+
     <TextView
         android:id="@+id/autoTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="autoView"
-        android:text="@string/autonomous_balls_scored_open"
+        android:text="@string/initiation_line_crossed"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
     <LinearLayout
@@ -425,18 +434,6 @@
 
         <RadioButton
             android:id="@+id/climb5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/climb_5" />
-
-        <RadioButton
-            android:id="@+id/climb4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/climb_4" />
-
-        <RadioButton
-            android:id="@+id/climb3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/climb_3" />
