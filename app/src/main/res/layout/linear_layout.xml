@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="autoView"
-        android:text="@string/initiation_line_crossed"
+        android:text="@string/autonomous_balls_scored_open"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
     <LinearLayout
