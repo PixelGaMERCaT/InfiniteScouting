@@ -49,7 +49,7 @@ except FileNotFoundError:
     calculations.title = "Calculations"
     dataSheet = wb.create_sheet("Data")
     dataSheet.append(("Name", "Match Number", "Team Number", "Initation crossed", "Auto Inner", "Auto High", "Auto Low", "Teleop Inner", "Teleop High", "Teleop Low", "Defense Played", "Defense Effectiveness", "Defense Played Against", "Climb Effectiveness", "Comments"))
-    calculations.append(("Team Number", "Matches", "% Leave initiation", "Avg Auto Inner", "Avg Auto High", "Avg Auto Low", "Avg Auto Score", "Avg Teleop Inner", "Avg Teleop High", "Avg Teleop Low", "Avg Teleop Score", "Position Control", "Rotation Control", "% Rendevous", "% Times Climbed", "% Times Played Defense", "Avg Defense Effectiveness", "Avg Score"))
+    calculations.append(("Team Number", "Matches", "% Leave initiation", "Avg Auto Inner", "Avg Auto High", "Avg Auto Low", "Avg Auto Score", "Avg Teleop Inner", "Avg Teleop High", "Avg Teleop Low", "Position Control", "Rotation Control", "% Rendevous", "% Times Climbed", "Avg Teleop Score", "% Times Played Defense", "Avg Defense Effectiveness", "Avg Score"))
 
 #removing duplicates
 duplicatesRemoved = []
@@ -64,7 +64,18 @@ data = sorted(duplicatesRemoved, key=lambda x:x[1])
 #adding to Calculations
 for i in range(len(data)):
     if not data[i][1] in existingTeams:
-        calculations.append((data[i][1], "=IFERROR(COUNTIF(Data!C2:$C,$A" + str(calculations.max_row + 1) + "),"")"))
+        rowNum = calculations.max_row + 1
+        rowCalcs = (data[i][1],
+                    '=IFERROR(COUNTIF($Data.$C$2:$C1000,$A%d),"")' % rowNum,
+                    '=IFERROR(TRUNC(COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$E$2:$E1000,"=1") /$B%d * 100, 2),"")' % (rowNum, rowNum),
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$F$2:$F1000)/$B%d,2),"")' % (rowNum, rowNum),
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$G$2:$G1000)/$B%d,2),"")' % (rowNum, rowNum),
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$H$2:$H1000)/$B%d,2),"")' % (rowNum, rowNum),
+                    '=(D%d*6+E%d*4+F%d*2)' % (rowNum, rowNum, rowNum),
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$G$2:$G1000)/$B%d,2),"")' % (rowNum, rowNum),
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$H$2:$H1000)/$B%d,2),"")' % (rowNum, rowNum),
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$I$2:$I1000)/$B%d,2),"")' % (rowNum, rowNum),)
+        calculations.append((data[i][1], "=IFERROR(COUNTIF(Data!C2:$C,$A" + str() + "),"")"))
 
 
 for row in data:
