@@ -65,17 +65,26 @@ data = sorted(duplicatesRemoved, key=lambda x:x[1])
 for i in range(len(data)):
     if not data[i][1] in existingTeams:
         rowNum = calculations.max_row + 1
-        rowCalcs = (data[i][1],
-                    '=IFERROR(COUNTIF($Data.$C$2:$C1000,$A%d),"")' % rowNum,
-                    '=IFERROR(TRUNC(COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$E$2:$E1000,"=1") /$B%d * 100, 2),"")' % (rowNum, rowNum),
-                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$F$2:$F1000)/$B%d,2),"")' % (rowNum, rowNum),
-                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$G$2:$G1000)/$B%d,2),"")' % (rowNum, rowNum),
-                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$H$2:$H1000)/$B%d,2),"")' % (rowNum, rowNum),
-                    '=(D%d*6+E%d*4+F%d*2)' % (rowNum, rowNum, rowNum),
-                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$G$2:$G1000)/$B%d,2),"")' % (rowNum, rowNum),
-                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$H$2:$H1000)/$B%d,2),"")' % (rowNum, rowNum),
-                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$I$2:$I1000)/$B%d,2),"")' % (rowNum, rowNum),)
-        calculations.append((data[i][1], "=IFERROR(COUNTIF(Data!C2:$C,$A" + str() + "),"")"))
+        rowCalcs = (data[i][1],                                                                                                                                                             #Team number
+                    '=IFERROR(COUNTIF($Data.$C$2:$C1000,$A%d),"")' % rowNum,                                                                                                                #Number of matches
+                    '=IFERROR(TRUNC(COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$E$2:$E1000,"=1") /$B%d * 100, 2),"")' % (rowNum, rowNum),                                                  #% Leave initiation
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$F$2:$F1000)/$B%d,2),"")' % (rowNum, rowNum),                                                                  #Avg auto inner
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$G$2:$G1000)/$B%d,2),"")' % (rowNum, rowNum),                                                                  #Avg auto high
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$H$2:$H1000)/$B%d,2),"")' % (rowNum, rowNum),                                                                  #Avg auto low
+                    '=(D%d*6+E%d*4+F%d*2+C%d/20)' % (rowNum, rowNum, rowNum, rowNum),                                                                                                                      #Avg auto score
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$G$2:$G1000)/$B%d,2),"")' % (rowNum, rowNum),                                                                  #Avg teleop inner
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$H$2:$H1000)/$B%d,2),"")' % (rowNum, rowNum),                                                                  #Avg teleop high
+                    '=IFERROR(TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$I$2:$I1000)/$B%d,2),"")' % (rowNum, rowNum),                                                                  #Avg teleop low
+                    '',                                                                                                                                                                     #Position Control
+                    '',                                                                                                                                                                     #Rotation Control
+                    '=IFERROR(TRUNC((1-COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$L$%d:$L1000,"=1") /$B2) * 100, 2),"")' % (rowNum, rowNum),                                              #% Rendevous
+                    '=IFERROR(TRUNC(COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$L$%d:$L1000,"=3") /$B2 * 100, 2),"")' % (rowNum, rowNum),                                                  #% Times climbed
+                    '=(H%d+I%d*2+J%d*3+M%d/20+N%d/20)' % (rowNum, rowNum, rowNum, rowNum, rowNum),                                                                                                                                                            #Avg teleop score
+                    '=IFERROR(TRUNC(COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$M$%d:$M1000,"=1") /$B2 * 100, 2),"")' % (rowNum, rowNum),                                                  #% Times played defense
+                    '=TRUNC(SUMIF($RawData.$C$2:$C1000,$A%d,$RawData.$N$%d:$N1000)/COUNTIFS($RawData.$C$2:$C1000,$A%d,$RawData.$M$%d:$M1000,"=1"), 2)' % (rowNum, rowNum, rowNum, rowNum),  #Avg defense score
+                    '=(G%d+O%d)'                                                                                                                                                             #Avg overall score
+                    )
+        calculations.append(rowCalcs)
 
 
 for row in data:
