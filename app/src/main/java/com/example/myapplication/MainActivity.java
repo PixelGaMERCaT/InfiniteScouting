@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -411,6 +413,15 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 e.printStackTrace();
 
             }
+        } else if (getFieldValue(R.id.matchNumber).equals("1739")) {
+//            Toast.makeText(this, "file://" + this.getFilesDir() + csvFilename, Toast.LENGTH_SHORT).show();
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/*");
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "data");
+//            sendIntent.putExtra(Intent.EXTRA_TITLE, "Scouting Data");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, "org.bluecheese1086.fileprovider", new File(this.getFilesDir(), csvFilename)));
+            startActivity(Intent.createChooser(sendIntent, "share file with"));
         } else {
             general = false;
             auto = false;
@@ -472,6 +483,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                     contents += "3";
                     break;
             }
+            contents += "," + commentBox.getText();
             writeCSV(this, contents);
             matchNumber.setText("" + (Integer.parseInt("" + matchNumber.getText()) + 1));
             teamNumber.setText("");

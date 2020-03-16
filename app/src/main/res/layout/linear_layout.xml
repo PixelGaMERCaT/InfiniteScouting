@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:onClick="generalView"
         android:text="@string/general_open"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <EditText
         android:id="@+id/name"
@@ -40,6 +40,14 @@
         android:importantForAutofill="no"
         android:inputType="number" />
 
+    <TextView
+        android:id="@+id/autoTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="autoView"
+        android:text="@string/autonomous_balls_scored_open"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
     <Switch
         android:id="@+id/initiationCrossed"
         android:layout_width="match_parent"
@@ -48,14 +56,6 @@
         android:text="@string/initiation_line_crossed"
         android:textOff="@string/no"
         android:textOn="@string/yes" />
-
-    <TextView
-        android:id="@+id/autoTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="autoView"
-        android:text="@string/autonomous_balls_scored_open"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
 
     <LinearLayout
         android:id="@+id/autoInnerHigh"
@@ -213,7 +213,7 @@
         android:layout_height="wrap_content"
         android:onClick="teleopView"
         android:text="@string/teleop_balls_scored_open"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <LinearLayout
         android:id="@+id/teleopInnerHigh"
@@ -371,7 +371,7 @@
         android:layout_height="wrap_content"
         android:onClick="miscView"
         android:text="@string/misc_open"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <TextView
         android:id="@+id/miscDefenseTab"

@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Scouting App</string>
     <string name="save">Save</string>
-    <string name="name">Name</string>
+    <string name="name">Your Name</string>
     <string name="match_number">Match Number</string>
     <string name="team_number">Team Number</string>
     <string name="general_open">▼ General</string>
-    <string name="autonomous_balls_scored_open">▼ Autonomous Balls Scored</string>
-    <string name="teleop_balls_scored_open">▼ Teleop Balls Scored</string>
+    <string name="autonomous_balls_scored_open">▼ Autonomous</string>
+    <string name="teleop_balls_scored_open">▼ Teleop</string>
     <string name="misc_open">▼ Miscellaneous</string>
     <string name="general_closed">► General</string>
-    <string name="autonomous_balls_scored_closed">► Autonomous Balls Scored</string>
-    <string name="teleop_balls_scored_closed">► Teleop Balls Scored</string>
+    <string name="autonomous_balls_scored_closed">► Autonomous</string>
+    <string name="teleop_balls_scored_closed">► Teleop</string>
     <string name="misc_closed">► Miscellaneous</string>
     <string name="minus5">-5</string>
     <string name="minus1">-1</string>
@@ -31,11 +31,10 @@
     <string name="comments_question">Any additional comments:</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
-    <string name="start_nfc_server">Start NFC Server</string>
     <string name="export">Export</string>
     <string name="delete_csv">Delete CSV</string>
     <string name="show_csv">Show CSV</string>
-    <string name="initiation_line_crossed">Initiation line crossed?</string>
+    <string name="initiation_line_crossed">Initiation line crossed during auto?</string>
 
 
 </resources>
